@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressionismo — app didattica</title>
+<style>
+:root{--ink:#20251f;--muted:#687064;--paper:#fbf8f1;--card:#fffdf8;--green:#365b48;--sage:#e5eee4;--gold:#d7a84b;--line:#e5e0d5}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:linear-gradient(120deg,#263f34,#53765c);color:#fff;padding:38px max(22px,calc((100% - 1100px)/2)) 34px}
+header .eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.8}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.4rem 0}header p{max-width:650px;color:#e7eee5}
+nav{position:sticky;top:0;z-index:5;background:#fffdf8ed;backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;padding:10px max(12px,calc((100% - 1100px)/2))}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:999px;font-size:.92rem}nav a:hover,nav a.active{background:var(--sage);color:var(--green)}
+main{max-width:1100px;margin:auto;padding:28px 20px 60px}.section{scroll-margin-top:76px;margin:0 0 40px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:18px}h2{font-size:1.7rem;margin:0}h3{margin:.2rem 0 .6rem}p{margin:.4rem 0 1rem}.sub{color:var(--muted);margin:.2rem 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px #292d1a08}.tag{display:inline-block;background:var(--sage);color:var(--green);border-radius:6px;padding:3px 8px;font-size:.78rem;font-weight:700}.big{font-size:2rem}.feature{border-left:4px solid var(--gold);padding:12px 16px;background:#f5efdf;border-radius:0 12px 12px 0}
+button,.button{border:0;background:var(--green);color:white;border-radius:10px;padding:11px 15px;font:inherit;cursor:pointer}button:hover{filter:brightness(1.08)}button.secondary{background:#e9eee7;color:var(--green)}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.level-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.level-tabs button{background:#e9e5dc;color:var(--ink)}.level-tabs button.selected{background:var(--green);color:white}.question{padding:17px 0;border-bottom:1px solid var(--line)}.question:last-child{border:0}.question p{font-weight:650}.answers{display:grid;gap:8px;margin-top:10px}.answers label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#f6f3ec;border-radius:10px;cursor:pointer}.answers input{margin-top:5px;accent-color:var(--green)}textarea{width:100%;min-height:88px;border:1px solid #cfc9bc;border-radius:10px;padding:11px;font:inherit;background:white}.result{padding:14px;border-radius:12px;background:var(--sage);margin-top:15px}.muted{color:var(--muted);font-size:.9rem}.keylist{display:flex;flex-wrap:wrap;gap:8px}.keylist span{background:#f2ead7;padding:8px 12px;border-radius:9px}.progress{height:8px;background:#e7e2d8;border-radius:99px;overflow:hidden}.progress div{height:100%;background:var(--gold);width:0;transition:width .2s}footer{text-align:center;padding:25px;color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:600px){header{padding-top:28px}.section-head{display:block}.section-head button{margin-top:10px}.card{padding:16px}}
+@media print{nav,button,.level-tabs,footer{display:none!important}body{background:white}.card{break-inside:avoid;box-shadow:none}.section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Laboratorio di arte · Scuola secondaria di primo grado</div>
+  <h1>Alla scoperta<br>dell’Impressionismo</h1>
+  <p>Esplora le caratteristiche del movimento, ripassa gli artisti e mettiti alla prova con questionari a tre livelli.</p>
+  <div class="keylist"><span>☀️ Luce</span><span>🎨 Colore</span><span>🖌️ Pennellate rapide</span><span>🌳 En plein air</span></div>
+</header>
+<nav aria-label="Navigazione principale">
+  <a href="#inizio" class="active">Panoramica</a><a href="#caratteristiche">Caratteristiche</a><a href="#artisti">Artisti</a><a href="#quiz">Questionari</a><a href="#supporto">Scheda di supporto</a><a href="#valutazione">Valutazione</a>
+</nav>
+<main>
+<section id="inizio" class="section">
+ <div class="section-head"><div><h2>1. Panoramica</h2><p class="sub">Le idee essenziali da ricordare</p></div><span class="tag">Introduzione</span></div>
+ <div class="grid">
+  <article class="card"><div class="big">🗓️</div><h3>Quando e dove</h3><p>L’Impressionismo si sviluppa soprattutto in <strong>Francia</strong>, nella <strong>seconda metà dell’Ottocento</strong>.</p></article>
+  <article class="card"><div class="big">👁️</div><h3>Un’impressione del momento</h3><p>Gli artisti osservano come la realtà appare in un preciso istante, con particolare attenzione a luce e colore.</p></article>
+  <article class="card"><div class="big">🌳</div><h3>En plein air</h3><p>Significa dipingere <strong>all’aria aperta</strong>, osservando direttamente la luce e l’ambiente.</p></article>
+ </div>
+ <div class="feature" style="margin-top:16px"><strong>Idea chiave:</strong> gli Impressionisti cercano di rappresentare l’impressione di un momento, osservando soprattutto luce e colore.</div>
+</section>
+<section id="caratteristiche" class="section">
+ <div class="section-head"><div><h2>2. Caratteristiche</h2><p class="sub">Come riconoscere un’opera impressionista</p></div></div>
+ <div class="grid">
+  <article class="card"><h3>☀️ Luce</h3><p>Gli effetti della luce e le variazioni atmosferiche influenzano l’aspetto del soggetto.</p></article>
+  <article class="card"><h3>🎨 Colore</h3><p>Il colore è fondamentale per rendere l’atmosfera e la percezione visiva.</p></article>
+  <article class="card"><h3>🖌️ Pennellate rapide</h3><p>Le pennellate possono essere visibili e immediate, senza definire ogni dettaglio.</p></article>
+  <article class="card"><h3>🏙️ Vita quotidiana</h3><p>Scene di vita quotidiana e momenti comuni possono diventare soggetti dei dipinti.</p></article>
+ </div>
+</section>
+<section id="artisti" class="section">
+ <div class="section-head"><div><h2>3. Artisti principali</h2><p class="sub">Nomi da conoscere</p></div></div>
+ <div class="grid">
+  <article class="card"><span class="tag">Artista</span><h3>Claude Monet</h3><p>Uno dei principali artisti associati all’Impressionismo.</p></article>
+  <article class="card"><span class="tag">Artista</span><h3>Pierre-Auguste Renoir</h3><p>Tra gli artisti indicati nella scheda di supporto.</p></article>
+  <article class="card"><span class="tag">Artista</span><h3>Edgar Degas</h3><p>Artista associato al movimento impressionista.</p></article>
+  <article class="card"><span class="tag">Artista</span><h3>Édouard Manet</h3><p>Tra i nomi riportati nella scheda di supporto.</p></article>
+ </div>
+</section>
+<section id="quiz" class="section">
+ <div class="section-head"><div><h2>4. Questionari interattivi</h2><p class="sub">Scegli il livello. Le risposte vengono corrette automaticamente quando possibile.</p></div></div>
+ <div class="level-tabs" role="group" aria-label="Scegli il livello"><button class="selected" data-level="base">🟢 Base</button><button data-level="intermedio">🟡 Intermedio</button><button data-level="avanzato">🔴 Avanzato</button></div>
+ <div class="card"><div class="progress" aria-label="Progresso quiz"><div id="progressFill"></div></div><p id="progressText" class="muted">0 risposte selezionate</p><form id="quizForm"><div id="questions"></div><button type="submit">Controlla le risposte</button> <button type="button" class="secondary" id="resetQuiz">Ricomincia</button><div id="quizResult" aria-live="polite"></div></form></div>
+ <p class="muted">Nota: le domande aperte si possono compilare, ma la loro valutazione richiede una lettura della risposta.</p>
+</section>
+<section id="supporto" class="section">
+ <div class="section-head"><div><h2>5. Scheda di supporto</h2><p class="sub">Parole chiave e frasi guida</p></div></div>
+ <div class="card"><h3>Parole chiave</h3><div class="keylist"><span>Francia</span><span>Seconda metà dell’Ottocento</span><span>Luce</span><span>Colore</span><span>Pennellate rapide</span><span>En plein air</span><span>Impressione visiva</span><span>Vita quotidiana</span></div>
+ <div class="feature" style="margin-top:18px"><strong>Frase-guida:</strong> “Gli Impressionisti cercano di rappresentare l’impressione di un momento, osservando soprattutto luce e colore.”</div>
+ <h3 style="margin-top:20px">Per rispondere con parole semplici</h3><p>Puoi usare parole chiave, frasi brevi o uno schema. Concentrati su: <strong>che cosa vedo?</strong> <strong>Quali colori noto?</strong> <strong>Come viene rappresentata la luce?</strong></p></div>
+</section>
+<section id="valutazione" class="section">
+ <div class="section-head"><div><h2>6. Valutazione</h2><p class="sub">Criteri ripresi dalla griglia dell’esercitazione</p></div><button onclick="window.print()" class="secondary">Stampa pagina</button></div>
+ <div class="grid">
+  <article class="card"><span class="tag">Base</span><h3>Riconoscere</h3><p>Riconosce l’Impressionismo, alcuni artisti e le principali caratteristiche.</p></article>
+  <article class="card"><span class="tag">Intermedio</span><h3>Comprendere</h3><p>Comprende le caratteristiche del movimento e sa stabilire semplici collegamenti.</p></article>
+  <article class="card"><span class="tag">Avanzato</span><h3>Analizzare</h3><p>Analizza un’opera, utilizza il lessico specifico e motiva le proprie osservazioni.</p></article>
+ </div>
+ <div class="card" style="margin-top:14px"><h3>Punteggio suggerito nell’esercitazione</h3><ul><li>Vero/Falso: 1 punto per risposta corretta.</li><li>Scelta multipla: 1 punto per risposta corretta.</li><li>Domanda aperta: da 0 a 2 punti in base a correttezza, completezza e uso del lessico.</li></ul><p class="muted">Per gli alunni BES, privilegiare la comprensione dei concetti e il raggiungimento degli obiettivi, senza penalizzare eccessivamente gli errori ortografici o le difficoltà espressive quando non sono l’obiettivo della prova.</p></div>
+</section>
+</main>
+<footer>App didattica sull’Impressionismo · Contenuti basati sull’esercitazione fornita</footer>
+<script>
+const bank={
+base:[
+ {type:'vf',q:'L’Impressionismo si sviluppò soprattutto in Francia nella seconda metà dell’Ottocento.',a:['Vero','Falso'],correct:0},
+ {type:'vf',q:'Gli Impressionisti erano interessati soprattutto a rappresentare la luce e le impressioni del momento.',a:['Vero','Falso'],correct:0},
+ {type:'vf',q:'Gli Impressionisti dipingevano esclusivamente all’interno degli atelier.',a:['Vero','Falso'],correct:1},
+ {type:'vf',q:'Claude Monet è uno dei principali artisti dell’Impressionismo.',a:['Vero','Falso'],correct:0},
+ {type:'mc',q:'Dove nacque principalmente l’Impressionismo?',a:['Francia','Spagna','Germania','Italia'],correct:0},
+ {type:'mc',q:'Quale elemento interessa particolarmente gli Impressionisti?',a:['La luce','Le regole della geometria','I soggetti mitologici','La pittura medievale'],correct:0},
+ {type:'mc',q:'Quale tra questi artisti è impressionista?',a:['Claude Monet','Michelangelo','Leonardo da Vinci','Pablo Picasso'],correct:0},
+ {type:'open',q:'Che cosa significa dipingere “en plein air”?'}
+],
+intermedio:[
+ {type:'vf',q:'Gli Impressionisti utilizzavano spesso pennellate rapide e visibili.',a:['Vero','Falso'],correct:0},
+ {type:'vf',q:'Gli Impressionisti cercavano sempre di ottenere immagini molto dettagliate e perfettamente definite.',a:['Vero','Falso'],correct:1},
+ {type:'vf',q:'La fotografia contribuì a modificare il modo in cui gli artisti osservavano e rappresentavano la realtà.',a:['Vero','Falso'],correct:0},
+ {type:'vf',q:'Edgar Degas è associato all’Impressionismo.',a:['Vero','Falso'],correct:0},
+ {type:'mc',q:'Quale caratteristica è tipica della pittura impressionista?',a:['Colori sempre scuri e uniformi','Attenzione agli effetti della luce','Solo soggetti religiosi','Assenza completa del colore'],correct:1},
+ {type:'mc',q:'Quale soggetto poteva interessare particolarmente un Impressionista?',a:['Una scena di vita quotidiana','Solo episodi della mitologia greca','Solo ritratti di re e regine','Solo scene religiose'],correct:0},
+ {type:'mc',q:'Perché gli Impressionisti utilizzavano spesso pennellate rapide?',a:['Per rendere l’impressione immediata della scena','Per nascondere completamente i colori','Per imitare la pittura medievale','Per rendere ogni dettaglio perfettamente preciso'],correct:0},
+ {type:'open',q:'Indica almeno due caratteristiche dell’Impressionismo.'}
+],
+avanzato:[
+ {type:'vf',q:'Nell’Impressionismo il modo in cui un soggetto appare può cambiare in relazione alla luce e alle condizioni atmosferiche.',a:['Vero','Falso'],correct:0},
+ {type:'vf',q:'Gli Impressionisti rappresentavano esclusivamente soggetti storici e mitologici.',a:['Vero','Falso'],correct:1},
+ {type:'mc',q:'Un dipinto presenta pennellate rapide, colori luminosi, una scena quotidiana e forti effetti di luce. A quale movimento può appartenere?',a:['Impressionismo','Medioevo','Rinascimento','Arte bizantina'],correct:0},
+ {type:'mc',q:'Quale affermazione descrive meglio il rapporto tra Impressionismo e realtà?',a:['Riprodurre ogni dettaglio in modo fotografico','Rappresentare soprattutto la percezione visiva e l’impressione del momento','Evitare di rappresentare la realtà','Rappresentare solamente personaggi fantastici'],correct:1},
+ {type:'open',q:'Immagina un dipinto impressionista che rappresenta un parco in una giornata di sole. Descrivi la luce, i colori e l’effetto delle pennellate.'},
+ {type:'open',q:'Secondo te, perché gli Impressionisti erano interessati a rappresentare scene della vita quotidiana?'}
+]};
+let level='base';
+const form=document.getElementById('quizForm'), host=document.getElementById('questions');
+function render(){host.innerHTML='';document.getElementById('quizResult').innerHTML='';bank[level].forEach((item,i)=>{const div=document.createElement('div');div.className='question';const title=document.createElement('p');title.textContent=(i+1)+'. '+item.q;div.appendChild(title);
+if(item.type==='open'){const ta=document.createElement('textarea');ta.name='q'+i;ta.placeholder='Scrivi qui la tua risposta…';ta.setAttribute('aria-label','Risposta alla domanda '+(i+1));div.appendChild(ta)}
+else{const ans=document.createElement('div');ans.className='answers';item.a.forEach((opt,j)=>{const lab=document.createElement('label');const input=document.createElement('input');input.type='radio';input.name='q'+i;input.value=j;lab.append(input,document.createTextNode(opt));ans.appendChild(lab)});div.appendChild(ans)}host.appendChild(div)});updateProgress()}
+function updateProgress(){const total=bank[level].length;let count=0;bank[level].forEach((q,i)=>{if(form.querySelector('[name="q'+i+'"]:checked')||(form.querySelector('[name="q'+i+'"]')?.tagName==='TEXTAREA'&&form.querySelector('[name="q'+i+'"]').value.trim()))count++});document.getElementById('progressFill').style.width=(count/total*100)+'%';document.getElementById('progressText').textContent=count+' di '+total+' risposte compilate'}
+document.querySelectorAll('[data-level]').forEach(btn=>btn.addEventListener('click',()=>{level=btn.dataset.level;document.querySelectorAll('[data-level]').forEach(b=>b.classList.toggle('selected',b===btn));render()}));
+form.addEventListener('change',updateProgress);form.addEventListener('input',updateProgress);
+form.addEventListener('submit',e=>{e.preventDefault();let correct=0,gradable=0,open=0;bank[level].forEach((q,i)=>{if(q.type==='open'){if(form.querySelector('[name="q'+i+'"]').value.trim())open++;return}gradable++;const chosen=form.querySelector('[name="q'+i+'"]:checked');if(chosen&&Number(chosen.value)===q.correct)correct++});const result=document.getElementById('quizResult');result.className='result';result.innerHTML='<strong>Risultato: '+correct+' / '+gradable+'</strong><p>Risposte chiuse corrette. Domande aperte compilate: '+open+' / '+bank[level].filter(q=>q.type==='open').length+'. Le risposte aperte vanno valutate dall’insegnante.</p>';});
+document.getElementById('resetQuiz').addEventListener('click',()=>{form.reset();document.getElementById('quizResult').innerHTML='';updateProgress()});
+render();
+const links=[...document.querySelectorAll('nav a')];const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-25% 0px -65% 0px'});document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
