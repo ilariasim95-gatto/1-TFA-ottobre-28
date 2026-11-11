@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La mia tastiera – attività di digitazione</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#17243a;--blue:#155eef;--green:#16834a;--yellow:#fff2bf;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:1.4}
+main{max-width:1050px;margin:auto;padding:18px}
+h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}
+h2{font-size:1.35rem;margin:0 0 12px}
+p{margin:8px 0}
+.panel{background:var(--white);border:2px solid #d6deea;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 2px 8px #17243a0c}
+label{display:block;font-weight:700;margin:10px 0 5px}
+input,select{font:inherit;padding:13px;border:2px solid #8392a8;border-radius:10px;width:100%;background:white;color:var(--ink)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+button{font:700 1.05rem Arial;border:3px solid #0c3f9e;border-radius:14px;padding:14px 18px;background:#e8efff;color:#102d68;cursor:pointer;min-height:58px}
+button:focus,input:focus,select:focus{outline:4px solid #ffbf47;outline-offset:3px}
+button.primary{background:var(--blue);color:white;border-color:#0b3eaa}
+button.good{background:#e2f6e9;color:#075c30;border-color:#16834a}
+button.warn{background:var(--yellow);color:#543d00;border-color:#a87900}
+button:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.big-target{font-size:clamp(3.5rem,14vw,7rem);font-weight:800;text-align:center;line-height:1.1;padding:15px;color:#123b91;min-height:125px}
+.status{font-size:1.15rem;font-weight:700;min-height:1.7em;text-align:center}
+.keyboard{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;margin-top:12px}
+.key{min-height:64px;padding:8px 2px;font-size:1.35rem;background:#fff;border:2px solid #7c8ba3;color:#14233c}
+.key.space{grid-column:span 5;font-size:1rem}
+.key.back{grid-column:span 2;font-size:.9rem}
+.key.enter{grid-column:span 3;font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.stat{background:#eef3fb;border-radius:12px;padding:12px}
+.stat strong{display:block;font-size:1.8rem}
+.timer{font-size:2.5rem;font-weight:800;font-variant-numeric:tabular-nums}
+.small{font-size:.9rem;color:#42516a}
+.toggle{display:flex;align-items:center;gap:10px;margin-top:10px}
+.toggle input{width:25px;height:25px}
+footer{font-size:.85rem;color:#4b5870;padding:12px}
+@media(max-width:650px){.row{grid-template-columns:1fr}.keyboard{grid-template-columns:repeat(5,minmax(0,1fr))}.key.space{grid-column:span 3}.key.back{grid-column:span 2}.key.enter{grid-column:span 5}.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>⌨️ La mia tastiera</h1>
+<p>Un piccolo passo alla volta. Guarda, scegli e premi.</p>
+</header>
+
+<section class="panel" aria-labelledby="persona">
+<h2 id="persona">👤 Chi sta giocando?</h2>
+<div class="row">
+<div><label for="nome">Nome</label><input id="nome" autocomplete="given-name" placeholder="Scrivi il nome"></div>
+<div><label for="cognome">Cognome</label><input id="cognome" autocomplete="family-name" placeholder="Scrivi il cognome"></div>
+</div>
+</section>
+
+<section class="panel" aria-labelledby="attivita">
+<h2 id="attivita">🎯 Scegli l'attività</h2>
+<label for="modalita">Attività</label>
+<select id="modalita">
+<option value="lettera">Trova una lettera</option>
+<option value="parola">Copia una parola</option>
+<option value="libera">Scrivi liberamente</option>
+</select>
+<div id="parolaBox" hidden>
+<label for="parola">Parola da copiare</label>
+<input id="parola" value="CIAO" maxlength="30">
+</div>
+<div class="toggle"><input type="checkbox" id="voce" checked><label for="voce" style="margin:0">Leggi ad alta voce l'obiettivo</label></div>
+<div class="actions">
+<button class="primary" id="nuovo">Nuovo obiettivo</button>
+<button id="ascolta">🔊 Ascolta</button>
+</div>
+<div class="big-target" id="obiettivo" aria-live="polite">A</div>
+<p class="small" style="text-align:center">Premi il tasto corrispondente sulla tastiera qui sotto oppure sulla tastiera del computer.</p>
+<div class="status" id="messaggio" aria-live="polite">Pronto? Iniziamo!</div>
+</section>
+
+<section class="panel" aria-labelledby="tastiera">
+<h2 id="tastiera">🔤 Tastiera grande</h2>
+<div class="keyboard" id="tasti" aria-label="Tastiera virtuale"></div>
+</section>
+
+<section class="panel" aria-labelledby="tempo">
+<h2 id="tempo">⏱️ Tempo dell'attività</h2>
+<div class="row" style="align-items:center">
+<div><div class="timer" id="timer" aria-live="off">00:00</div><p class="small">Tempo trascorso</p></div>
+<div class="actions" style="align-content:center">
+<button class="good" id="start">▶ Avvia</button>
+<button class="warn" id="pausa">Ⅱ Pausa</button>
+<button id="azzera">↺ Azzera</button>
+</div>
+</div>
+</section>
+
+<section class="panel" aria-labelledby="risultati">
+<h2 id="risultati">⭐ Risultati</h2>
+<div class="stats">
+<div class="stat"><strong id="tentativi">0</strong><span>Tasti premuti</span></div>
+<div class="stat"><strong id="corretti">0</strong><span>Corretti</span></div>
+<div class="stat"><strong id="errori">0</strong><span>Da riprovare</span></div>
+</div>
+<div class="actions">
+<button class="primary" id="salva">💾 Salva sessione</button>
+<button class="good" id="scarica">⬇ Scarica report</button>
+<button id="nuovaSessione">Nuova sessione</button>
+</div>
+<p class="small" id="salvataggio" aria-live="polite">I dati restano su questo dispositivo. Il report si scarica come file di testo.</p>
+</section>
+<footer>Attività di supporto alla digitazione. L'adulto può scegliere tempi brevi, proporre una sola richiesta alla volta e aiutare senza fretta. I risultati sono descrittivi e non costituiscono una valutazione clinica.</footer>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+let target='A',typed='',seconds=0,interval=null,attempts=0,correct=0,errors=0,history=[];
+const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const keys=$('tasti');
+function say(text){if($('voce').checked && 'speechSynthesis' in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang='it-IT';u.rate=.82;speechSynthesis.speak(u)}}
+function setTarget(){
+ const mode=$('modalita').value;
+ if(mode==='lettera'){target=alphabet[Math.floor(Math.random()*alphabet.length)];typed='';}
+ else if(mode==='parola'){target=($('parola').value.trim()||'CIAO').toLocaleUpperCase('it-IT');typed='';}
+ else {target='';typed='';}
+ $('obiettivo').textContent=mode==='libera'?'Scrivi quello che vuoi':target;
+ $('messaggio').textContent=mode==='libera'?'Puoi scegliere i tasti che preferisci.':'Cerca il tasto e premilo.';
+ if(mode!=='libera')say(mode==='lettera'?'Trova la lettera '+target:'Copia la parola '+target);
+}
+function renderKeys(){
+ keys.innerHTML='';
+ [...alphabet,'SPAZIO','CANCELLA','FINE'].forEach(k=>{
+  const b=document.createElement('button');b.className='key'+(k==='SPAZIO'?' space':'')+(k==='CANCELLA'?' back':'')+(k==='FINE'?' enter':'');
+  b.textContent=k==='SPAZIO'?'␣ Spazio':k==='CANCELLA'?'⌫ Cancella':k==='FINE'?'✓ Fine':k;
+  b.setAttribute('aria-label',k);b.addEventListener('click',()=>press(k));keys.appendChild(b);
+ });
+}
+function press(k){
+ if(k==='CANCELLA'){typed=typed.slice(0,-1);$('messaggio').textContent='Ultimo carattere cancellato.';return}
+ if(k==='FINE'){$('messaggio').textContent='Ben fatto! Hai terminato questa prova.';say('Ben fatto!');return}
+ const char=k==='SPAZIO'?' ':k;
+ if($('modalita').value==='libera'){typed+=char;attempts++;correct++;updateStats();$('messaggio').textContent='Hai premuto '+(char===' '?'spazio':char)+'.';return}
+ const expected=target[typed.length];
+ attempts++;
+ if(char===expected){correct++;typed+=char;history.push({richiesta:target, tasto:char, esito:'corretto'});$('messaggio').textContent='Bravo! Continua così!';say('Bravo!');}
+ else{errors++;history.push({richiesta:target,tasto:char,esito:'da riprovare'});$('messaggio').textContent='Riprova. Cerca '+(expected||'il prossimo tasto')+'.';}
+ updateStats();
+ if(typed===target){$('messaggio').textContent='🎉 Hai completato! Ottimo lavoro!';say('Hai completato! Ottimo lavoro!');setTimeout(setTarget,1400);}
+}
+function updateStats(){$('tentativi').textContent=attempts;$('corretti').textContent=correct;$('errori').textContent=errors;}
+function updateTimer(){$('timer').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');}
+function start(){if(interval)return;interval=setInterval(()=>{seconds++;updateTimer()},1000)}
+function pause(){clearInterval(interval);interval=null}
+function reset(){pause();seconds=0;updateTimer()}
+function data(){return {nome:$('nome').value.trim(),cognome:$('cognome').value.trim(),data:new Date().toLocaleString('it-IT'),durata:$('timer').textContent,attivita:$('modalita').selectedOptions[0].textContent,tentativi:attempts,corretti:correct,errori,cronologia:history}}
+function save(){const d=data();try{localStorage.setItem('report_tastiera_'+Date.now(),JSON.stringify(d));$('salvataggio').textContent='Sessione salvata su questo dispositivo.'}catch(e){$('salvataggio').textContent='Salvataggio non disponibile in questo browser.'}}
+function download(){const d=data();const lines=['REPORT ATTIVITA DI DIGITAZIONE','Nome: '+d.nome,'Cognome: '+d.cognome,'Data: '+d.data,'Attività: '+d.attivita,'Durata: '+d.durata,'Tasti premuti: '+d.tentativi,'Corretti: '+d.corretti,'Da riprovare: '+d.errori,'','DETTAGLIO','Richiesta | Tasto | Esito',...d.cronologia.map(x=>x.richiesta+' | '+x.tasto+' | '+x.esito)];const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='report-digitazione-'+new Date().toISOString().slice(0,10)+'.txt';a.click();URL.revokeObjectURL(url);$('salvataggio').textContent='Report scaricato.'}
+$('nuovo').onclick=setTarget;$('ascolta').onclick=()=>say($('modalita').value==='libera'?'Scrivi liberamente':target);
+$('modalita').onchange=()=>{$('parolaBox').hidden=$('modalita').value!=='parola';setTarget()};
+$('parola').onchange=setTarget;$('start').onclick=start;$('pausa').onclick=pause;$('azzera').onclick=reset;
+$('salva').onclick=save;$('scarica').onclick=download;
+$('nuovaSessione').onclick=()=>{attempts=correct=errors=0;history=[];typed='';updateStats();reset();setTarget();$('messaggio').textContent='Nuova sessione pronta. Buon lavoro!'};
+document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='SELECT')return;if(e.key==='Backspace'){e.preventDefault();press('CANCELLA')}else if(e.key==='Enter'){press('FINE')}else if(e.key===' '){e.preventDefault();press('SPAZIO')}else if(/^[a-z]$/i.test(e.key)){press(e.key.toUpperCase())}});
+renderKeys();setTarget();updateTimer();
+})();
+</script>
+</body>
+</html>
